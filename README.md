@@ -1,1 +1,1 @@
-# parkinson-ml-ci
+# parkinson-prediction
