@@ -1,8 +1,6 @@
+joblib
 numpy
 pandas
+pytest
 scikit-learn
-matplotlib
-seaborn
-xgboost
-imbalanced-learn
-tqdm
+

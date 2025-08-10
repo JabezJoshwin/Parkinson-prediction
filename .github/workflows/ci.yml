@@ -1,29 +1,42 @@
-name: Parkinson Disease ML CI
+name: Parkinson ML CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  train-and-evaluate:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Code
       uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Run training and evaluation
+    
+    - name: Download dataset
       run: |
-        python src/train_model.py
+        mkdir -p data+9
+        wget -O data/parkinson_disease.csv https://media.geeksforgeeks.org/wp-content/uploads/20250122143413596644/parkinson_disease.csv
+
+    - name: Train the Model
+      run: |
+        python model/train.py
+
+    - name: Run Tests
+      run: |
+        pytest tests/
+
+    - name: Check Model Accuracy
+      run: |
+        python tests/test_model.py
